@@ -20,3 +20,6 @@ type Map struct {
     a.读请求先到read在到dirty(这里有个加双锁的操作需要注意)  
     b.只要读请求没有在read中找到且 dirty存在read中没有的数据(amended为true)，则misses++
       amended bool                   // true if the dirty map contains some key not in m.
+
+#3 底层数据entry是一个指针，所以数据只有一份。
+#4 read 可以高效进行并发读和dirty中已存数据的写入

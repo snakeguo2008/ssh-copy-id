@@ -22,4 +22,8 @@ type Map struct {
       amended bool                   // true if the dirty map contains some key not in m.
 
 #3 底层数据entry是一个指针，所以数据只有一份。   
-#4 read 可以高效进行并发读和dirty中已存数据的写入
+#4 read 可以高效进行并发读和dirty中已存数据的写入    
+#5 读取read数据时两次加锁
+#6  
+
+# 总结：sync在写的数据不存在时会穿透到dirty map，在满足条件的情况下会将read中的数据提升到dirty。所以sync适用于重复数据比较多情况，不适用于大量写的情况
